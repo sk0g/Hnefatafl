@@ -8,6 +8,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Window.hpp>
 
 #define WIDTH    1280
 #define HEIGHT   720
@@ -22,10 +23,15 @@ private:
     void            processEvents();
     void            update();
     void            render();
+    void            handlePlayerInput(sf::Keyboard::Key, bool);
 
 private:
-    sf::RenderWindow mWindow;
-    sf::CircleShape  mPlayer;
+    sf::RenderWindow    mWindow;
+    sf::CircleShape     mPlayer;
+    bool                mIsMovingUp;
+    bool                mIsMovingDown;
+    bool                mIsMovingLeft;
+    bool                mIsMovingRight;
 };
 
 

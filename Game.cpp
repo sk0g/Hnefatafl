@@ -29,13 +29,50 @@ void Game::processEvents() {
     sf::Event event{};
 
     while (mWindow.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            mWindow.close();
+        switch (event.type) {
+            case sf::Event::Closed:
+                mWindow.close();
+                break;
+            case sf::Event::KeyPressed:
+                handlePlayerInput(event.key.code, true);
+                break;
+            case sf::Event::KeyReleased:
+                handlePlayerInput(event.key.code, false);
+                break;
         }
     }
 }
 
+void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
+    switch (key) {
+        case sf::Keyboard::Up:
+            mIsMovingUp = isPressed;
+            break;
+        case sf::Keyboard::Down:
+            mIsMovingDown = isPressed;
+            break;
+        case sf::Keyboard::Left:
+            mIsMovingLeft = isPressed;
+            break;
+        case sf::Keyboard::Right:
+            mIsMovingRight = isPressed;
+            break;
+        default:
+            break;
+    }
+}
+
 void Game::update() {
+    sf::Vector2f movement(0.f, 0.f);
+
+    auto sensitivity = 0.1f;
+
+    if (mIsMovingUp) {      movement.y -= sensitivity; }
+    if (mIsMovingDown) {    movement.y += sensitivity; }
+    if (mIsMovingLeft) {    movement.x -= sensitivity; }
+    if (mIsMovingRight) {   movement.x += sensitivity; }
+
+    mPlayer.move(movement);
 }
 
 void Game::render() {
